@@ -1,37 +1,19 @@
 #ifndef Controller_h
 #define Controller_h
 #include "Arduino.h"
+#include "Encoder.h"
 class Controller {
   public:
-    Controller(byte fireButton, byte reloadButton, byte motor, byte encoderPinA, byte encoderPinB, byte encoderPinC);
-    byte getControllerData();
-    void setVibration(byte state);
+    Controller(uint8_t fireButton, uint8_t reloadButton, uint8_t motor, uint8_t encoderPinA, uint8_t encoderPinB, uint8_t encoderPinC);
+    uint8_t getControllerData();
+    void setVibration(uint8_t state);
     void begin();
-    void begin(unsigned int, unsigned int);
+    void begin(uint16_t, uint16_t);
   private:
-    class Encoder {
-      public:
-        Encoder();
-        Encoder(byte pinA, byte pinB, byte pinC);
-        void begin();
-        void begin(int debounceTime,int switchDebounceTime);
-        int getRotation();
-        byte getButton();
-      private:
-        byte _pinA;
-        byte _pinB;
-        byte _pinC;
-        byte buttonReading;
-        unsigned int _debounceTime;
-        unsigned int _switchDebounceTime;
-        byte _direction;
-        unsigned long long _timer;
-    };
-    byte _fireButton;
-    byte _reloadButton;
-    byte _motor;
-    unsigned int _switchDebounceTime;
+    Switch _fireButton;
+    Switch _reloadButton;
     Encoder _encoder;
+    uint8_t _motor;
 };
 
 #endif

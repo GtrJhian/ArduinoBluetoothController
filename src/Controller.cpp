@@ -1,65 +1,46 @@
 #include "Controller.h"
 #include "Arduino.h"
-#define ENCODER_DEBOUNCE (millis()-_timer>=_debounceTime)
-#define ENCODER_SWITCH_DEBOUNCE (millis()-_timer>=_switchDebounceTime)
 
 
-Controller::Controller(byte fireButton, byte reloadButton, byte motor, byte encoderPinA, byte encoderPinB, byte encoderPinC){
-  _fireButton==fireButton;
-  _reloadButton=reloadButton;
+Controller::Controller(uint8_t fireButton, uint8_t reloadButton, uint8_t motor, uint8_t encoderPinA, uint8_t encoderPinB, uint8_t encoderPinC){
+  _fireButton=Switch(fireButton);
+  _reloadButton=Switch(reloadButton);
   _motor=motor;
-  //Encoder temp(encoderPinA,encoderPinB,encoderPinC);
   _encoder=Encoder(encoderPinA,encoderPinB,encoderPinC);
 }
 
 void Controller::begin(){
-  pinMode(_fireButton,INPUT_PULLUP);
-  pinMode(_reloadButton,INPUT_PULLUP);
-  pinMode(_motor,OUTPUT);
+  _fireButton.begin(0,INPUT_PULLUP);
+  _reloadButton.begin(0,INPUT_PULLUP,1);
   _encoder.begin();
-}
-void Controller::begin(unsigned int switchDebounceTime,unsigned int encoderDebounceTime){
+  pinMode(_motor,OUTPUT);
   
 }
+void Controller::begin(uint16_t encoderDebounceTime,uint16_t switchDebounceTime){
+  _fireButton.begin(switchDebounceTime,INPUT_PULLUP);
+  _reloadButton.begin(switchDebounceTime,INPUT_PULLUP,1);
+  _encoder.begin(encoderDebounceTime,switchDebounceTime);
+  pinMode(_motor,OUTPUT);
+}
 
-Controller::Encoder::Encoder(byte pinA, byte pinB, byte pinC){
-  _pinA=pinA;
-  _pinB=pinB;
-  _pinC=pinC;
+/*
+  Controller Data Format
+  bit 0 - FireButton
+  bit 1 - ReloadButton
+  bit 2 - Encoder BUTTON
+  bit 3 - Encoder CW
+  bit 4 - Encoder CCW 
+*/
+uint8_t Controller::getControllerData(){
+  uint8_t data=0x00;
+  data|=_fireButton.read();
+  data|=_reloadButton.read()<<1;
+  data|=_encoder.getButton()<<2;
+  int8_t temp=_encoder.getRotation();
+  data|=temp==0?data:temp>0?1<<3:1<<4;
+  return data;
 }
-void Controller::Encoder::begin(){
-  pinMode(_pinA,INPUT);
-  pinMode(_pinB,INPUT);
-  pinMode(_pinC,INPUT);
-}
-void Controller::Encoder::begin(int debounceTime,int switchDebounceTime){
-  _debounceTime=debounceTime;
-  _switchDebounceTime=switchDebounceTime;
-  begin();
-  _timer=millis();
-}
-int Controller::Encoder::getRotation(){
-  if(digitalRead(_pinA)&&digitalRead(_pinB)){
-    if(_direction==1||(_direction=0)>1){
-      return 1;
-    }
-    return -1;
-  }
-  if(_direction!=0) return 0;
-  if(!digitalRead(_pinA)&&ENCODER_DEBOUNCE){
-    _timer=millis();
-    _direction=1;
-  }
-  if(!digitalRead(_pinB)&&ENCODER_DEBOUNCE){
-    _timer=millis();
-    _direction=2;
-  }
-  return 0;
-}
-byte Controller::Encoder::getButton(){
-  if(ENCODER_SWITCH_DEBOUNCE){
-    _timer=millis();
-    buttonReading=digitalRead(_pinC);
-  }
-  return buttonReading;
+
+void Controller::setVibration(uint8_t state){
+  digitalWrite(_motor,state>0?1:0);
 }
