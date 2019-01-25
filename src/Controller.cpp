@@ -1,5 +1,5 @@
 #include "Controller.h"
-#include <Arduino.h>
+#include "Arduino.h"
 #define ENCODER_DEBOUNCE (millis()-_timer>=_debounceTime)
 #define ENCODER_SWITCH_DEBOUNCE (millis()-_timer>=_switchDebounceTime)
 

@@ -1,0 +1,6 @@
+{
+    "terminal.integrated.env.windows": {
+        "PATH": "C:\\Users\\Zildjian\\.platformio\\penv\\Scripts;C:\\Users\\Zildjian\\.platformio\\penv;C:\\Program Files (x86)\\Common Files\\Oracle\\Java\\javapath;C:\\WINDOWS\\system32;C:\\WINDOWS;C:\\WINDOWS\\System32\\Wbem;C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\;C:\\WINDOWS\\System32\\OpenSSH\\;C:\\Program Files\\Git\\cmd;C:\\xampp\\php;C:\\ProgramData\\ComposerSetup\\bin;C:\\Program Files (x86)\\AOMEI Backupper;C:\\Program Files\\dotnet\\;C:\\Users\\Zildjian\\AppData\\Local\\Microsoft\\WindowsApps;C:\\Users\\Zildjian\\AppData\\Local\\Programs\\Microsoft VS Code\\bin;C:\\Users\\Zildjian\\AppData\\Roaming\\Composer\\vendor\\bin;C:\\Gradle\\bin;;C:\\Program Files (x86)\\Common Files\\Oracle\\Java\\javapath;C:\\WINDOWS\\system32;C:\\WINDOWS;C:\\WINDOWS\\System32\\Wbem;C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\;C:\\WINDOWS\\System32\\OpenSSH\\;C:\\Program Files\\Git\\cmd;C:\\xampp\\php;C:\\ProgramData\\ComposerSetup\\bin;C:\\Program Files (x86)\\AOMEI Backupper;C:\\Program Files\\dotnet\\;C:\\Users\\Zildjian\\AppData\\Local\\Microsoft\\WindowsApps;C:\\Users\\Zildjian\\AppData\\Local\\Programs\\Microsoft VS Code\\bin;C:\\Users\\Zildjian\\AppData\\Roaming\\Composer\\vendor\\bin;C:\\Gradle\\bin;",
+        "PLATFORMIO_CALLER": "vscode"
+    }
+}
