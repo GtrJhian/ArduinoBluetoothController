@@ -18,7 +18,7 @@ void Switch::begin(uint8_t bounceTime, uint8_t inputType){
 void Switch::begin(uint8_t bounceTime, uint8_t inputType, uint8_t invertLogic){
     _bounceTime=bounceTime;
     pinMode(_pin,inputType);
-    _invertLogic=_invertLogic>0?1:0;
+    _invertLogic=invertLogic>0?1:0;
 }
 
 uint8_t Switch::read(){
