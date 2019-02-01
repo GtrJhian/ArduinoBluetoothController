@@ -5,11 +5,11 @@
 
 Controller controller(FIRE_BUTTON_PIN,RELOAD_BUTTON_PIN,BOLT_BUTTON_PIN
 ,MOTOR_PIN,ENCODER_PIN_A,ENCODER_PIN_B,ENCODER_PIN_C);
-SoftwareSerial BT(BLUETOOTH_TX_PIN,BLUETOOTH_RX_PIN);
+//SoftwareSerial BT(BLUETOOTH_TX_PIN,BLUETOOTH_RX_PIN);
 void setup() {
   // put your setup code here, to run once:
-  Serial.begin(BLUETOOTH_BAUDRATE);
-  BT.begin(BLUETOOTH_BAUDRATE);
+  Serial.begin(SERIAL_PORT_BAUDRATE);
+ // BT.begin(BLUETOOTH_BAUDRATE);
   controller.begin(ENCODER_DEBOUNCE_MILLIS,SWITCH_DEBOUNCE_MILLIS);
 }
 
@@ -27,9 +27,13 @@ void loop() {
     Serial.println(BT.read(),BIN);
   }
   */
-  Serial.write(controller.getControllerData());
+  int data=controller.getControllerData();
+  Serial.write(data);
   if(Serial.available()){
-    if(Serial.read()==MOTOR_VIBRATE_BYTE)
-    controller.vibrate(MOTOR_VIBRATE_TIME);
+    if((data=Serial.read())==MOTOR_VIBRATE_BYTE){
+      controller.vibrate();
+    }
+    else controller.stopVibrating();
   }
+  
 }

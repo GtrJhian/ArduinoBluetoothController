@@ -46,10 +46,25 @@ uint8_t Controller::getControllerData(){
   data|=_fireButton.read();
   data|=_reloadButton.read()<<1;
   data|=_boltButton.read()<<2;
+  
   data|=_encoder.getButton()<<3;
-  int8_t temp=_encoder.getRotation();
-  data|=temp==0?0:temp>0?1<<4:1<<5;
-  _motor.watch();
+  data|=_encoder.getRotation()<<4;
+  //int8_t temp=_encoder.getRotation();
+  //int8_t temp=0;
+ // data|=temp==0?0:1<<(temp+3);
+  
+  //_motor.watch();
   return data;
+}
+
+void Controller::vibrate(uint16_t time){
+  _motor.run(time);
+}
+
+void Controller::vibrate(){
+  _motor.run();
+}
+void Controller::stopVibrating(){
+  _motor.stop();
 }
 

@@ -10,6 +10,8 @@ class Controller {
     void begin();
     void begin(uint16_t, uint16_t);
     void vibrate(uint16_t time);
+    void vibrate();
+    void stopVibrating();
   private:
     Switch _fireButton;
     Switch _reloadButton;
